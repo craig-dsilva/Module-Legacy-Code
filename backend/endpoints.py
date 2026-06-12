@@ -178,9 +178,7 @@ def send_rebloom():
     if user.username == request.json["sender"]:
         return make_response((f"Cannot rebloom own bloom", 422))
 
-    print(request.json["sender"])
-
-    # blooms.rebloom(rebloom_id=request.json["id"], resender=user sender=request.json["sender"], content=request.json["content"])
+    blooms.rebloom(rebloom_id=request.json["id"], resender=user, sender=request.json["sender"], content=request.json["content"])
 
     return jsonify(
         {

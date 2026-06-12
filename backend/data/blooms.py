@@ -48,11 +48,11 @@ def rebloom(*, rebloom_id: int, resender: User, sender: User, content: str) -> R
 
     with db_cursor() as cur:
         cur.execute(
-            "INSERT INTO reblooms (id, resender_id, original_sender_id, content, send_timestamp, times_rebloomed) VALUES (%(rebloom_id)s, %(resender_id)s, %(sender_id)s, %(content)s, %(timestamp)s, 1) ON CONFLICT (resender_id, original_sender_id, content) DO UPDATE SET times_rebloomed = times_rebloomed + 1",
+            "INSERT INTO reblooms (id, resender_id, original_sender_name, content, send_timestamp, times_rebloomed) VALUES (%(rebloom_id)s, %(resender_id)s, %(sender_name)s, %(content)s, %(timestamp)s, 1) ON CONFLICT (resender_id, original_sender_name, content) DO UPDATE SET times_rebloomed = reblooms.times_rebloomed + 1",
             dict(
                 rebloom_id=rebloom_id,
                 resender_id=resender.id,
-                sender_id=sender.id,
+                sender_name=sender,
                 content=content,
                 timestamp=datetime.datetime.now(datetime.UTC),
             ),
@@ -161,3 +161,4 @@ def make_limit_clause(limit: Optional[int], kwargs: Dict[Any, Any]) -> str:
     else:
         limit_clause = ""
     return limit_clause
+
