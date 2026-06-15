@@ -212,11 +212,11 @@ async function postBloom(content) {
   }
 }
 
-async function postRebloom(id, sender, content) {
+async function postRebloom(id, sender, content, sent_timestamp) {
   try {
     const data = await _apiRequest("/rebloom", {
       method: "POST",
-      body: JSON.stringify({id, sender, content}),
+      body: JSON.stringify({id, sender, content, sent_timestamp}),
     });
 
     if (data.success) {
